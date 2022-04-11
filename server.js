@@ -2,6 +2,10 @@ const express = require("express");
 require("dotenv").config();
 
 const { todoService, todoServiceById } = require("./services/todoService");
+const {
+  allUniversities,
+  universitiesByName,
+} = require("./services/universities");
 
 const app = express();
 
@@ -28,15 +32,42 @@ app.get("/todo/:id", (req, res, next) => {
   todoServiceById(todoId)
     .then((result) => res.status(200).json(result))
     .catch((err) =>
-      res
-        .status(err.status || 501)
-        .json({
-          error: {
-            message: err.message,
-            status: err.status,
-            method: req.method,
-          },
-        })
+      res.status(err.status || 501).json({
+        error: {
+          message: err.message,
+          status: err.status,
+          method: req.method,
+        },
+      })
+    );
+});
+
+app.get("/universities", (req, res, next) => {
+  allUniversities()
+    .then((result) => res.status(200).json(result))
+    .catch((err) =>
+      res.status(err.status || 501).json({
+        error: {
+          message: err.message,
+          status: err.status,
+          method: req.method,
+        },
+      })
+    );
+});
+
+app.get("/universities/:name", (req, res, next) => {
+  const universityName = req.params.name;
+  universitiesByName(universityName)
+    .then((result) => res.status(200).json(result))
+    .catch((err) =>
+      res.status(err.status || 501).json({
+        error: {
+          message: err.message,
+          status: err.status,
+          method: req.method,
+        },
+      })
     );
 });
 
