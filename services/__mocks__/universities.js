@@ -90,14 +90,16 @@ const allUniversities = () => {
 
 const universitiesByName = (name) => {
   console.log("Mock university by name");
-  return Promise.resolve({
-    "state-province": null,
-    country: "United States",
-    name: "Tusculum College",
-    web_pages: ["https://home.tusculum.edu/"],
-    domains: ["tusculum.edu"],
-    alpha_two_code: "US",
-  });
+  return Promise.resolve([
+    {
+      "state-province": null,
+      country: "United States",
+      name: "Tusculum College",
+      web_pages: ["https://home.tusculum.edu/"],
+      domains: ["tusculum.edu"],
+      alpha_two_code: "US",
+    },
+  ]);
 };
 
 module.exports = {
