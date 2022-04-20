@@ -59,7 +59,19 @@ app.get("/universities", (req, res, next) => {
 app.get("/universities/:name", (req, res, next) => {
   const universityName = req.params.name;
   universitiesByName(universityName)
-    .then((result) => res.status(200).json(result))
+    .then((result) => {
+      if (result.length===0) {
+        const err = new Error ("bad search");
+        err.status=400;
+        res.status(400).json({
+          error: {
+            message: err.message,
+            status: err.status,
+            method: req.method,
+          }
+        })
+      } else{ res.status(200).json(result) }
+    })
     .catch((err) =>
       res.status(err.status || 501).json({
         error: {
